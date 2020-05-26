@@ -1,0 +1,125 @@
+{
+	"workbench.colorTheme": "Clear Dawn Turbo",
+	"workbench.iconTheme": "vs-minimal",
+	"workbench.preferredDarkColorTheme": "Default Light+",
+	"workbench.activityBar.visible": false,
+	"editor.minimap.enabled": false,
+	"editor.fontSize": 22,
+	"editor.detectIndentation": false,
+	"editor.folding": false,
+	"editor.glyphMargin": false,
+	"editor.smoothScrolling": true,
+	"editor.quickSuggestions": {
+		"other": false,
+		"comments": false,
+		"strings": false
+	},
+	"editor.scrollbar.horizontal": "hidden",
+	"editor.scrollbar.vertical": "hidden",
+	"editor.scrollbar.verticalScrollbarSize": 0,
+	"editor.scrollbar.horizontallScrollbarSize": 0,
+	//"terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+	"editor.suggestOnTriggerCharacters": false,
+	"terminal.integrated.fontSize": 16,
+	"editor.renderWhitespace": "none",
+	"breadcrumbs.enabled": false,
+	"files.autoSave": "off",
+	"window.menuBarVisibility": "toggle",
+	"editor.fontWeight": "bold",
+	"editor.mouseWheelZoom": true,
+	"workbench.editor.enablePreview": false,
+	"editor.acceptSuggestionOnCommitCharacter": false,
+	"workbench.statusBar.visible": false,
+	"update.mode": "none",
+	"extensions.autoCheckUpdates": false,
+	"extensions.autoUpdate": false,
+	"update.enableWindowsBackgroundUpdates": false,
+	"editor.lineNumbers": "off",
+	"workbench.editor.enablePreviewFromQuickOpen": false,
+	"editor.renderIndentGuides": false,
+	"workbench.tree.renderIndentGuides": "none",
+	"workbench.tips.enabled": false,
+	"editor.codeLens": false,
+	"csharp.referencesCodeLens.enabled": false,
+    "editor.insertSpaces": true,
+	"[csharp]": {
+		"editor.defaultFormatter": "Leopotam.csharpfixformat",
+	},
+	"files.exclude": {
+		"**/*.meta": true
+	},
+	"editor.rename.enablePreview": false,
+	"editor.hover.enabled": true,
+	"editor.hover.sticky": false,
+	"editor.lightbulb.enabled": false,
+	"editor.parameterHints.enabled": true,
+	"editor.renderFinalNewline": false,
+	"editor.foldingHighlight": false,
+	"editor.highlightActiveIndentGuide": false,
+	"editor.semanticHighlighting.enabled": false,
+	"scm.diffDecorations": "none",
+	"window.titleBarStyle": "native",
+	"git.decorations.enabled": false,
+	"workbench.colorCustomizations": {
+		"editor.background": "#47177c",
+		"editorUnnecessaryCode.opacity": "#ffffff",
+		"editorWidget.background": "#555555",
+		"dropdown.background": "#ffffff",
+		"dropdown.listBackground": "#555555",
+		"dropdown.border": "#000000",
+		"dropdown.foreground": "#000000",
+		"list.highlightForeground": "#ffff55",
+		"list.hoverBackground": "#aaaaaa",
+		"pickerGroup.foreground": "#ffff55",
+		"contrastActiveBorder": "#000000",
+		"contrastBorder": "#000000",
+		// "input.background": "#ffffff",
+		// "input.border": "#0000aa",
+		// "input.foreground": "#ffffff",
+		// "input.placeholderForeground": "#000000",
+	},
+	"editor.tokenColorCustomizations": {
+		"textMateRules": [
+			{
+				"scope": [
+					"keyword",
+					"keyword.operator",
+					"storage.modifier",
+					"entity.name.function",
+					"constant.numeric",
+					"constant.language",
+					"keyword.control"
+				],
+				"settings": {
+					"foreground": "#FFFFFF"
+				}
+			},
+			{
+				"scope": [
+					"comment",
+					"string"
+				],
+				"settings": {
+					"foreground": "#ffff55"
+				}
+			},
+		]
+	},
+	"workbench.editor.showTabs": false,
+	"workbench.editor.showIcons": false,
+	"window.zoomLevel": 2,
+	"csharpfixformat.style.spaces.afterBracket": false,
+	"csharpfixformat.style.spaces.beforeParenthesis": false,
+	"csharpfixformat.style.spaces.insideEmptyBraces": false,
+	"csharpfixformat.style.spaces.removeAfterCommandBeforeParenthesis": "true",
+	"explorer.confirmDelete": false,
+	"git.enabled": false,
+	"python.linting.pylintEnabled": false,
+	"python.linting.enabled": true,
+	"python.linting.banditEnabled": true,
+	"python.formatting.provider": "autopep8",
+	//"alt-editor.name": "emacs",
+	"alt-editor.args": "+{line}:{column} {filename}",
+    "alt-editor.binary": "C:\\Users\\Vitalya\\AppData\\Roaming\\emacs-26.3-x86_64\\bin\\emacsclientw.exe",
+    "window.openWithoutArgumentsInNewWindow": "off"
+}
