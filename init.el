@@ -47,9 +47,9 @@
 
 (add-hook 'c-mode-hook
           (lambda ()
+            (c-set-offset 'case-label '+)
             (local-set-key (kbd "C-M-i") 'dabbrev-expand)
-            (local-set-key (kbd "C-M-p")
-                           'imenu)))
+            (local-set-key (kbd "C-M-p") 'imenu)))
 
 
 ;(setenv  "PATH" (concat
@@ -73,7 +73,7 @@
 (setenv "LANG" "ru_RU.CP1251")
 
 (setq-default indent-tabs-mode nil)
-
+(setq search-whitespace-regexp ".*?")
 
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
@@ -103,7 +103,7 @@
 
 (defun search-c-tag ()
   (interactive
-   (grep (concat "grep -nHRr " (find-tag-default) " *.c *.h"))))
+   (grep (concat "grep -nHRr -C 3 " (find-tag-default) " *.c *.h"))))
 (defun search-c-tag-recursive ()
   (interactive
    (rgrep (find-tag-default) "*.c *.h" "." nil)))
