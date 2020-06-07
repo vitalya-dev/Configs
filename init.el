@@ -108,6 +108,13 @@
   (interactive
    (rgrep (find-tag-default) "*.c *.h" "." nil)))
 
+(defun grep-search-under-cursor ()
+  (interactive
+   (grep (concat "grep -nHRr -C 3 "
+                 (find-tag-default)
+                 " *." (file-name-extension (buffer-file-name))))))
+
+
 (defun functions ()
   (interactive)
   (imenu--cleanup)
