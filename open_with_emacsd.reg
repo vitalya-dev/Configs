@@ -1,9 +1,20 @@
 Windows Registry Editor Version 5.00
+[HKEY_CLASSES_ROOT\*\shell\emacs]
+@="Emacs"
+"Icon"="\"C:\\Users\\Admin\\AppData\\Roaming\\emacs-26.3-x86_64\\bin\\runemacs.exe\", 0"
+[HKEY_CLASSES_ROOT\*\shell\emacs\command]
+@="\"C:\\Users\\Admin\\AppData\\Roaming\\emacs-26.3-x86_64\\bin\\runemacs.exe\" \"%1\""
 
 [HKEY_CLASSES_ROOT\Directory\shell\emacs]
-@="Open Folder as Emacs File"
-"Icon"="\"C:\\Users\\Vitalya\\AppData\\Roaming\\emacs-26.3-x86_64\\bin\\runemacs.exe\", 0"
+@="Emacs"
+"Icon"="\"C:\\Users\\Admin\\AppData\\Roaming\\emacs-26.3-x86_64\\bin\\runemacs.exe\", 0"
 [HKEY_CLASSES_ROOT\Directory\shell\emacs\command]
-@="\"C:\\Users\\Vitalya\\AppData\\Roaming\\emacs-26.3-x86_64\\bin\\runemacs.exe\" \"%1\""
+@="\"C:\\Users\\Admin\\AppData\\Roaming\\emacs-26.3-x86_64\\bin\\runemacs.exe\" \"%1\""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\emacs]
+@="Emacs"
+"Icon"="\"C:\\Users\\Admin\\AppData\\Roaming\\emacs-26.3-x86_64\\bin\\runemacs.exe\",0"
+[HKEY_CLASSES_ROOT\Directory\Background\shell\emacs\command]
+@="\"C:\\Users\\Admin\\AppData\\Roaming\\emacs-26.3-x86_64\\bin\\runemacs.exe\" \"%V\""
 
 
