@@ -34,8 +34,7 @@
 ;(global-set-key (kbd "M-v") 'scroll-down-line)
 (global-set-key (kbd "C-v") 'vscode)
 (global-set-key (kbd "C-c C-r") 're-builder)
-(global-set-key (kbd "C-t") 'search-c-tag)
-(global-set-key (kbd "M-t") 'search-c-tag-recursive)
+(global-set-key (kbd "C-t") 'grep-search-under-cursor)
 (global-set-key (kbd "M-n")
                 (lambda() (interactive)
                   (scroll-other-window next-screen-context-lines)))
@@ -50,6 +49,11 @@
             (c-set-offset 'case-label '+)
             (local-set-key (kbd "C-M-i") 'dabbrev-expand)
             (local-set-key (kbd "C-M-p") 'imenu)))
+
+(add-hook 'csharp-mode-hook
+          (lambda ()
+            (setq c-basic-offset 2)
+            (setq-default indent-tabs-mode nil)))
 
 
 ;(setenv  "PATH" (concat
@@ -72,14 +76,14 @@
 )
 (setenv "LANG" "ru_RU.CP1251")
 
+
 (setq-default indent-tabs-mode nil)
 (setq search-whitespace-regexp ".*?")
+(setq case-fold-search t)
 
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (require 'csharp-mode)
-
-(setq default-directory "C:/Users/Vitalya/Desktop/")
 
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -101,31 +105,15 @@
   (shell "*cmd*")
   (set-buffer-process-coding-system 'cp1251 'utf-8))   
 
-(defun search-c-tag ()
-  (interactive
-   (grep (concat "grep -nHRr -C 3 " (find-tag-default) " *.c *.h"))))
-(defun search-c-tag-recursive ()
-  (interactive
-   (rgrep (find-tag-default) "*.c *.h" "." nil)))
-
 (defun grep-search-under-cursor ()
   (interactive
-   (grep (concat "grep -nHRr -C 3 "
-                 (find-tag-default)
-                 " *." (file-name-extension (buffer-file-name))))))
-
-
-(defun functions ()
-  (interactive)
-  (imenu--cleanup)
-  (setq imenu-menubar-modified-tick -1)
-  (setq imenu--index-alist nil)
-  (setq imenu--last-menubar-index-alist nil)
-  (imenu-update-menubar)
-  (with-output-to-temp-buffer "functions"
-    (mapcar (lambda (i) (print (format "%s" (car i)))) (cdr (imenu--make-index-alist)))))
-
-
+   (if (use-region-p)
+       (grep (concat "grep -nHRr -C 3 "
+                     (buffer-substring-no-properties (region-beginning) (region-end))
+                     " *." (file-name-extension (buffer-file-name))))
+     (grep (concat "grep -nHRr -C 3 "
+                   (find-tag-default)
+                   " *." (file-name-extension (buffer-file-name)))))))
 (defun vscode ()
   (interactive)
   (call-process
