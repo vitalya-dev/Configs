@@ -16,6 +16,8 @@
 (global-font-lock-mode 1) 
 (set-cursor-color "green")
 
+(toggle-debug-on-error)
+
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-c\C-m" 'execute-extended-command)
 (global-set-key "\C-w" 'backward-kill-word)
@@ -27,7 +29,7 @@
 (global-set-key (kbd "M-3") 'split-window-right)
 ;(global-set-key (kbd "M-n") 'other-window)
 ;(global-set-key (kbd "M-p") (lambda () (interactive) (other-window -1)))
-(global-set-key (kbd "C-M-b") (lambda () (interactive (forward-sexp -1))))
+(global-set-key (kbd "C-M-b") (lambda () (interactive) (forward-sexp -1)))
 (global-set-key (kbd "M-SPC") 'mark-word)
 (global-set-key (kbd "C-.") 'repeat)
 ;(global-set-key (kbd "C-v") 'scroll-up-line)
@@ -74,8 +76,6 @@
    (getenv "PATH")
   )
 )
-(setenv "LANG" "ru_RU.CP1251")
-
 
 (setq-default indent-tabs-mode nil)
 (setq search-whitespace-regexp ".*?")
@@ -106,14 +106,14 @@
   (set-buffer-process-coding-system 'cp1251 'utf-8))   
 
 (defun grep-search-under-cursor ()
-  (interactive
-   (if (use-region-p)
-       (grep (concat "grep -nHRr -C 3 "
-                     (buffer-substring-no-properties (region-beginning) (region-end))
-                     " *." (file-name-extension (buffer-file-name))))
-     (grep (concat "grep -nHRr -C 3 "
-                   (find-tag-default)
-                   " *." (file-name-extension (buffer-file-name)))))))
+  (interactive)
+  (if (use-region-p)
+      (grep (concat "grep -nHRr -C 3 "
+                    (buffer-substring-no-properties (region-beginning) (region-end))
+                    " *." (file-name-extension (buffer-file-name))))
+    (grep (concat "grep -nHRr -C 3 "
+                  (find-tag-default)
+                  " *." (file-name-extension (buffer-file-name))))))
 (defun vscode ()
   (interactive)
   (call-process
@@ -146,9 +146,6 @@
  '(region ((t (:background "black" :foreground "snow"))))
  '(show-paren-match ((t (:foreground "green")))))
 
-(server-start)
-
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -158,3 +155,4 @@
  '(grep-use-null-device nil)
  '(show-paren-mode t)
  '(tool-bar-mode nil))
+(server-start)
