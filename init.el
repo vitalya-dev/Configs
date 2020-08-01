@@ -1,4 +1,5 @@
 
+
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -117,7 +118,7 @@
 (defun vscode ()
   (interactive)
   (call-process
-   "C:\\Users\\Vitalya\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+   "C:\\Users\\Vitalya\\AppData\\Local\\Programs\\VSCodium\\VSCodium.exe"
    nil
    nil
    nil
@@ -125,23 +126,33 @@
    (format "%s:%d:%d" (buffer-file-name) (line-number-at-pos) (+ (current-column) 1))))
 
 
+(defun stop-using-minibuffer ()
+  "kill the minibuffer"
+  (when (and (>= (recursion-depth) 1) (active-minibuffer-window))
+    (abort-recursive-edit)))
+
+(add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
+
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Consolas" :foundry "outline" :slant normal :weight bold :height 241 :width normal))))
+ '(default ((t (:family "Consolas" :foundry "outline" :slant normal :weight bold :height 181 :width normal))))
  '(font-lock-builtin-face ((t (:foreground "white"))))
- '(font-lock-comment-delimiter-face ((t (:inherit font-lock-comment-face :foreground "yellow2"))))
- '(font-lock-comment-face ((t (:foreground "yellow2"))))
- '(font-lock-constant-face ((t (:foreground "white"))))
  '(font-lock-function-name-face ((t (:foreground "white"))))
- '(font-lock-keyword-face ((t (:foreground "white"))))
- '(font-lock-preprocessor-face ((t (:inherit font-lock-builtin-face :foreground "yellow2"))))
- '(font-lock-string-face ((t (:foreground "yellow2"))))
- '(font-lock-type-face ((t (:foreground "white"))))
  '(font-lock-variable-name-face ((t (:foreground "white"))))
- '(font-lock-warning-face ((t (:inherit nil :foreground "yellow2"))))
+ '(font-lock-keyword-face ((t (:foreground "white"))))
+ '(font-lock-comment-face ((t (:foreground "yellow2"))))
+ '(font-lock-comment-delimiter-face ((t (:foreground "yellow2"))))
+ '(font-lock-type-face ((t (:foreground "white"))))
+ '(font-lock-constant-face ((t (:foreground "white"))))
+ '(font-lock-builtin-face ((t (:foreground "white"))))
+ '(font-lock-preprocessor-face ((t (:foreground "white"))))
+ '(font-lock-string-face ((t (:foreground "yellow2"))))
+ '(font-lock-doc-face ((t (:foreground "white"))))
+ '(font-lock-negation-char-face ((t (:foreground "white"))))
  '(mode-line ((t (:background "green4" :foreground "yellow" :box (:line-width -1 :style released-button) :height 0.7))))
  '(region ((t (:background "black" :foreground "snow"))))
  '(show-paren-match ((t (:foreground "green")))))
@@ -156,3 +167,6 @@
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (server-start)
+
+
+
