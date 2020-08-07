@@ -25,3 +25,6 @@
   !b::send {LCtrl down}{Left down}{LCtrl up}{Left up}
   !f::send {LCtrl down}{Right down}{LCtrl up}{Right up}
 #IfWinActive
+!t::
+  WinGetClass, class, A
+  MsgBox, The active window's class is "%class%".
