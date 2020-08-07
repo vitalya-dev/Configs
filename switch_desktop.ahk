@@ -1,5 +1,8 @@
-#1::send {LWin down}{LCtrl down}{Left}{LCtrl up}{LWin up}
-#2::send {LWin down}{LCtrl down}{Right}{LCtrl up}{LWin up}
+#1::send {LWin down}{LCtrl down}{Left down}{LCtrl up}{LWin up}{Left up}
+#2::send {LWin down}{LCtrl down}{Right down}{LCtrl up}{LWin up}{Right up}
+#t::
+  SendInput %A_Hour%:%A_Min%
+  return
 #IfWinActive ahk_class ConsoleWindowClass
   ^b::send {Left down}
       Sleep 200 
