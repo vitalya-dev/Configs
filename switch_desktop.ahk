@@ -1,5 +1,5 @@
-#1::send {LWin down}{LCtrl down}{Left down}{LCtrl up}{Left up}
-#2::send {LWin down}{LCtrl down}{Right down}{LCtrl up}{Right up}
+#1::^#Left 
+#2::^#Right 
 #t::
   SendInput %A_Hour%:%A_Min%
   return
@@ -28,3 +28,4 @@
 #^t::
   WinGetClass, class, A
   MsgBox, The active window's class is "%class%".
+
