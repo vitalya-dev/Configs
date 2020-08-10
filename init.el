@@ -1,5 +1,4 @@
 
-
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -28,6 +27,7 @@
 (global-set-key (kbd "M-1") 'delete-other-windows)
 (global-set-key (kbd "M-2") 'split-window-below)
 (global-set-key (kbd "M-3") 'split-window-right)
+(global-set-key (kbd "C-x C-b") 'buffer-menu)
 ;(global-set-key (kbd "M-n") 'other-window)
 ;(global-set-key (kbd "M-p") (lambda () (interactive) (other-window -1)))
 (global-set-key (kbd "C-M-b") (lambda () (interactive) (forward-sexp -1)))
@@ -38,6 +38,8 @@
 (global-set-key (kbd "C-v") 'vscode)
 (global-set-key (kbd "C-c C-r") 're-builder)
 (global-set-key (kbd "C-t") 'grep-search-under-cursor)
+(global-set-key (kbd "M-k") 'view-kill)
+
 (global-set-key (kbd "M-n")
                 (lambda() (interactive)
                   (scroll-other-window next-screen-context-lines)))
@@ -134,6 +136,22 @@
 (add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
 
 
+(defun view-kill ()
+  (interactive)
+  (let ((count 0))
+    (switch-to-buffer (get-buffer-create "kill-ring-view") t)
+    (local-set-key (kbd "q") 'kill-this-buffer)
+    (dolist (x kill-ring)
+      (insert (concat "----- " (number-to-string count) " -----"))
+      (newline)
+      (insert x)
+      (newline)
+      (newline)
+      (setq count (+ count 1)))
+    (goto-char (point-min))))
+
+
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -141,18 +159,17 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Consolas" :foundry "outline" :slant normal :weight bold :height 181 :width normal))))
  '(font-lock-builtin-face ((t (:foreground "white"))))
- '(font-lock-function-name-face ((t (:foreground "white"))))
- '(font-lock-variable-name-face ((t (:foreground "white"))))
- '(font-lock-keyword-face ((t (:foreground "white"))))
- '(font-lock-comment-face ((t (:foreground "yellow2"))))
  '(font-lock-comment-delimiter-face ((t (:foreground "yellow2"))))
- '(font-lock-type-face ((t (:foreground "white"))))
+ '(font-lock-comment-face ((t (:foreground "yellow2"))))
  '(font-lock-constant-face ((t (:foreground "white"))))
- '(font-lock-builtin-face ((t (:foreground "white"))))
+ '(font-lock-doc-face ((t (:foreground "white"))))
+ '(font-lock-function-name-face ((t (:foreground "white"))))
+ '(font-lock-keyword-face ((t (:foreground "white"))))
+ '(font-lock-negation-char-face ((t (:foreground "white"))))
  '(font-lock-preprocessor-face ((t (:foreground "white"))))
  '(font-lock-string-face ((t (:foreground "yellow2"))))
- '(font-lock-doc-face ((t (:foreground "white"))))
- '(font-lock-negation-char-face ((t (:foreground "white"))))
+ '(font-lock-type-face ((t (:foreground "white"))))
+ '(font-lock-variable-name-face ((t (:foreground "white"))))
  '(mode-line ((t (:background "green4" :foreground "yellow" :box (:line-width -1 :style released-button) :height 0.7))))
  '(region ((t (:background "black" :foreground "snow"))))
  '(show-paren-match ((t (:foreground "green")))))
@@ -164,9 +181,8 @@
  ;; If there is more than one, they won't work right.
  '(grep-save-buffers nil)
  '(grep-use-null-device nil)
+ '(kill-ring-max 6000)
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (server-start)
-
-
 
