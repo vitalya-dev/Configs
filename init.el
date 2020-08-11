@@ -16,7 +16,8 @@
 (global-font-lock-mode 1) 
 (set-cursor-color "green")
 
-(toggle-debug-on-error)
+                                        ;
+;(toggle-debug-on-error)
 
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-c\C-m" 'execute-extended-command)
@@ -88,10 +89,10 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (require 'csharp-mode)
 
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
+;(prefer-coding-system 'utf-8)
+;(set-default-coding-systems 'utf-8)
+;(set-terminal-coding-system 'utf-8)
+;(set-keyboard-coding-system 'utf-8)
 
 
 ;;global emacs variables
@@ -99,14 +100,12 @@
 (setq backup-inhibited t)
 (setq inhibit-startup-message t)
 (setq auto-save-mode nil)
-(setq-default cursor-type '(hbar . 5)) 
+(setq-default cursor-type '(hbar . 5))
+;(setq-default cursor-type 'box)f
+(setq-default blink-cursor-interval 0.2)
+(setq-default blink-cursor-delay 0)
 ;;(setq show-paren-style 'expression)
 (global-auto-revert-mode t)
-
-(defun run-cmd ()
-  (interactive)
-  (shell "*cmd*")
-  (set-buffer-process-coding-system 'cp1251 'utf-8))   
 
 (defun grep-search-under-cursor ()
   (interactive)
@@ -179,6 +178,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(blink-cursor-delay 0.2)
  '(grep-save-buffers nil)
  '(grep-use-null-device nil)
  '(kill-ring-max 6000)
