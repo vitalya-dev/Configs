@@ -1,6 +1,7 @@
 RControl::Send {Volume_Mute}
 #1::^#Left 
 #2::^#Right 
+#w::Send !{F4}
 #t::
   SendInput %A_Hour%:%A_Min%
   return
@@ -34,5 +35,20 @@ RControl::Send {Volume_Mute}
 #IfWinActive
 ;WinGetClass, class, A
 ;MsgBox, The active window's class is "%class%".
+
+
+#q::
+	WinExist("ahk_class Shell_TrayWnd")
+
+	q := !q
+
+	If (q = "1") {
+		WinHide, ahk_class Shell_TrayWnd
+		WinHide, Start ahk_class Button
+	} Else {
+		WinShow, ahk_class Shell_TrayWnd
+		WinShow, Start ahk_class Button
+	}
+return
 
 
