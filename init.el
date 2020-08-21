@@ -16,8 +16,13 @@
 (global-font-lock-mode 1) 
 (set-cursor-color "green")
 
+(setq gc-cons-threshold most-positive-fixnum)
                                         ;
 ;(toggle-debug-on-error)
+
+;(require 'basic-mode)
+;(add-to-list 'auto-mode-alist '("\\.bas\\'" . basic-mode))
+
 
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-c\C-m" 'execute-extended-command)
@@ -25,6 +30,7 @@
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
 (global-set-key (kbd "C-x m") 'execute-extended-command)
+(global-set-key (kbd "C-M-g") 'garbage-collect)
 (global-set-key (kbd "M-1") 'delete-other-windows)
 (global-set-key (kbd "M-2") 'split-window-below)
 (global-set-key (kbd "M-3") 'split-window-right)
@@ -50,16 +56,30 @@
                   (scroll-other-window (* -1 next-screen-context-lines))))
 
 
+
+(add-hook 'buffer-menu-mode-hook
+          (lambda ()
+            (local-set-key (kbd "RET") (lambda ()
+                                         (interactive)
+                                         (let ((b (buffer-name)))
+                                           (Buffer-menu-this-window)
+                                           (kill-buffer b))))))
+
+
 (add-hook 'c-mode-hook
           (lambda ()
             (c-set-offset 'case-label '+)
             (local-set-key (kbd "C-M-i") 'dabbrev-expand)
+            (local-set-key (kbd "M-c") 'uncomment-region)
             (local-set-key (kbd "C-M-p") 'imenu)))
+
 
 (add-hook 'csharp-mode-hook
           (lambda ()
             (setq c-basic-offset 2)
             (setq-default indent-tabs-mode nil)))
+
+
 
 
 ;(setenv  "PATH" (concat
@@ -82,12 +102,14 @@
 )
 
 (setq-default indent-tabs-mode nil)
-(setq search-whitespace-regexp ".*?")
+(setq search-whitespace-regexp "[ \t\r\n]+")
 (setq case-fold-search t)
 
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
-(require 'csharp-mode)
+(add-to-list 'load-path "~/.emacs.d/lisp/emacs-gdscript-mode-master")
+(require 'gdscript-mode)
+
 
 ;(prefer-coding-system 'utf-8)
 ;(set-default-coding-systems 'utf-8)
@@ -100,9 +122,9 @@
 (setq backup-inhibited t)
 (setq inhibit-startup-message t)
 (setq auto-save-mode nil)
-(setq-default cursor-type '(hbar . 5))
+(setq-default cursor-type 'box)
 ;(setq-default cursor-type 'box)f
-(setq-default blink-cursor-interval 0.2)
+(setq-default blink-cursor-interval 0.1)
 (setq-default blink-cursor-delay 0)
 ;;(setq show-paren-style 'expression)
 (global-auto-revert-mode t)
@@ -116,6 +138,10 @@
     (grep (concat "grep -nHRr -C 3 "
                   (find-tag-default)
                   " *." (file-name-extension (buffer-file-name))))))
+
+
+
+
 (defun vscode ()
   (interactive)
   (call-process
@@ -125,7 +151,6 @@
    nil
    "-g"
    (format "%s:%d:%d" (buffer-file-name) (line-number-at-pos) (+ (current-column) 1))))
-
 
 (defun stop-using-minibuffer ()
   "kill the minibuffer"
@@ -161,7 +186,7 @@
  '(font-lock-comment-delimiter-face ((t (:foreground "yellow2"))))
  '(font-lock-comment-face ((t (:foreground "yellow2"))))
  '(font-lock-constant-face ((t (:foreground "white"))))
- '(font-lock-doc-face ((t (:foreground "white"))))
+ '(font-lock-doc-face ((t (:foreground "yellow"))))
  '(font-lock-function-name-face ((t (:foreground "white"))))
  '(font-lock-keyword-face ((t (:foreground "white"))))
  '(font-lock-negation-char-face ((t (:foreground "white"))))
@@ -170,7 +195,7 @@
  '(font-lock-type-face ((t (:foreground "white"))))
  '(font-lock-variable-name-face ((t (:foreground "white"))))
  '(mode-line ((t (:background "green4" :foreground "yellow" :box (:line-width -1 :style released-button) :height 0.7))))
- '(region ((t (:background "black" :foreground "snow"))))
+ '(region ((t (:background "#666" :foreground "snow"))))
  '(show-paren-match ((t (:foreground "green")))))
 
 (custom-set-variables
@@ -178,10 +203,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(blink-cursor-delay 0.2)
+ '(blink-cursor-blinks -1)
+ '(blink-cursor-delay 0)
  '(grep-save-buffers nil)
  '(grep-use-null-device nil)
- '(kill-ring-max 6000)
+ '(kill-ring-max 60)
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (server-start)
