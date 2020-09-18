@@ -1,0 +1,10 @@
+REGEDIT4
+
+;[HKEY_CLASSES_ROOT\Folder\shell] 
+;@="Total_Commander"
+
+[HKEY_CLASSES_ROOT\Folder\shell\Total_Commander] 
+@="Total Commander"
+
+[HKEY_CLASSES_ROOT\Folder\shell\Total_Commander\command] 
+@="c:\\totalcmd\\TOTALCMD64.EXE /O \"%1\""
