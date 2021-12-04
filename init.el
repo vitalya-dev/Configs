@@ -1,10 +1,3 @@
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-(package-initialize)
-
 (set-background-color "#012456")
 (set-foreground-color "White")
 
@@ -16,12 +9,17 @@
 (global-font-lock-mode 1) 
 (set-cursor-color "green")
 
-(setq gc-cons-threshold most-positive-fixnum)
                                         ;
 ;(toggle-debug-on-error)
 
 ;(require 'basic-mode)
 ;(add-to-list 'auto-mode-alist '("\\.bas\\'" . basic-mode))
+
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
+(setq recentf-max-saved-items 25)
+(global-set-key "\C-x\ \C-r" 'recentf-open-files)
+(run-at-time nil (* 5 60) 'recentf-save-list)
 
 
 (global-set-key "\C-x\C-m" 'execute-extended-command)
@@ -30,6 +28,7 @@
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
 (global-set-key (kbd "C-x m") 'execute-extended-command)
+(global-set-key (kbd "M-.") 'isearch-forward-symbol-at-point)
 (global-set-key (kbd "C-M-g") 'garbage-collect)
 (global-set-key (kbd "M-1") 'delete-other-windows)
 (global-set-key (kbd "M-2") 'split-window-below)
@@ -42,10 +41,9 @@
 (global-set-key (kbd "C-.") 'repeat)
 ;(global-set-key (kbd "C-v") 'scroll-up-line)
 ;(global-set-key (kbd "M-v") 'scroll-down-line)
-(global-set-key (kbd "C-v") 'vscode)
 (global-set-key (kbd "C-c C-r") 're-builder)
-(global-set-key (kbd "C-t") 'grep-search-under-cursor)
-(global-set-key (kbd "M-k") 'view-kill)
+(global-set-key (kbd "C-M-i") 'dabbrev-expand)
+
 
 (global-set-key (kbd "M-n")
                 (lambda() (interactive)
@@ -57,58 +55,23 @@
 
 
 
-(add-hook 'buffer-menu-mode-hook
-          (lambda ()
-            (local-set-key (kbd "RET") (lambda ()
-                                         (interactive)
-                                         (let ((b (buffer-name)))
-                                           (Buffer-menu-this-window)
-                                           (kill-buffer b))))))
 
-
-(add-hook 'c-mode-hook
-          (lambda ()
-            (c-set-offset 'case-label '+)
-            (local-set-key (kbd "C-M-i") 'dabbrev-expand)
-            (local-set-key (kbd "M-c") 'uncomment-region)
-            (local-set-key (kbd "C-M-p") 'imenu)))
-
-
-(add-hook 'csharp-mode-hook
-          (lambda ()
-            (setq c-basic-offset 2)
-            (setq-default indent-tabs-mode nil)))
-
-
-
-
-;(setenv  "PATH" (concat
-                 "C:\\Program Files\\Git\\usr\\bin" ";"
-                 "C:\\Users\\Vitalya\\AppData\\Local\\Programs\\Python\\Python38-32" ";"
-                 "C:\\Program Files\\Git\\cmd"
-;                 ))
-;(setenv  "PATH" (concat
-                 "C:\\Program Files\\Git\\usr\\bin" ";"
-                 "C:\\Users\\Vitalya\\AppData\\Local\\Programs\\Python\\Python38-32" ";"
-                 "C:\\Program Files\\Git\\cmd"
-;                 ))
-(setenv "PATH"
-  (concat
-   "C:/cygwin64/usr/local/bin" ";"
-   "C:/cygwin64/usr/bin" ";"
-   "C:/cygwin64/bin" ";"
-   (getenv "PATH")
-  )
-)
 
 (setq-default indent-tabs-mode nil)
 (setq search-whitespace-regexp "[ \t\r\n]+")
 (setq case-fold-search t)
 
 
-(add-to-list 'load-path "~/.emacs.d/lisp")
-(add-to-list 'load-path "~/.emacs.d/lisp/emacs-gdscript-mode-master")
+;(add-to-list 'load-path "~/.emacs.d/lisp")
+(add-to-list 'load-path "~/.emacs.d/emacs-gdscript-mode-1.4.0")
 (require 'gdscript-mode)
+
+(add-to-list 'load-path "~/.emacs.d/screenplay")
+(require 'screenplay)
+
+;(add-to-list 'load-path "~/.emacs.d/lsp-mode-master")
+;(require `lsp-mode)
+
 
 
 ;(prefer-coding-system 'utf-8)
@@ -129,28 +92,11 @@
 ;;(setq show-paren-style 'expression)
 (global-auto-revert-mode t)
 
-(defun grep-search-under-cursor ()
-  (interactive)
-  (if (use-region-p)
-      (grep (concat "grep -nHRr -C 3 "
-                    (buffer-substring-no-properties (region-beginning) (region-end))
-                    " *." (file-name-extension (buffer-file-name))))
-    (grep (concat "grep -nHRr -C 3 "
-                  (find-tag-default)
-                  " *." (file-name-extension (buffer-file-name))))))
 
 
 
 
-(defun vscode ()
-  (interactive)
-  (call-process
-   "C:\\Users\\Vitalya\\AppData\\Local\\Programs\\VSCodium\\VSCodium.exe"
-   nil
-   nil
-   nil
-   "-g"
-   (format "%s:%d:%d" (buffer-file-name) (line-number-at-pos) (+ (current-column) 1))))
+
 
 (defun stop-using-minibuffer ()
   "kill the minibuffer"
@@ -160,19 +106,10 @@
 (add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
 
 
-(defun view-kill ()
+(defun temp-buffer ()
   (interactive)
-  (let ((count 0))
-    (switch-to-buffer (get-buffer-create "kill-ring-view") t)
-    (local-set-key (kbd "q") 'kill-this-buffer)
-    (dolist (x kill-ring)
-      (insert (concat "----- " (number-to-string count) " -----"))
-      (newline)
-      (insert x)
-      (newline)
-      (newline)
-      (setq count (+ count 1)))
-    (goto-char (point-min))))
+  (switch-to-buffer (generate-new-buffer-name "*temp*")))
+
 
 
 
@@ -181,19 +118,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Consolas" :foundry "outline" :slant normal :weight bold :height 181 :width normal))))
- '(font-lock-builtin-face ((t (:foreground "white"))))
- '(font-lock-comment-delimiter-face ((t (:foreground "yellow2"))))
- '(font-lock-comment-face ((t (:foreground "yellow2"))))
- '(font-lock-constant-face ((t (:foreground "white"))))
- '(font-lock-doc-face ((t (:foreground "yellow"))))
- '(font-lock-function-name-face ((t (:foreground "white"))))
- '(font-lock-keyword-face ((t (:foreground "white"))))
- '(font-lock-negation-char-face ((t (:foreground "white"))))
- '(font-lock-preprocessor-face ((t (:foreground "white"))))
- '(font-lock-string-face ((t (:foreground "yellow2"))))
- '(font-lock-type-face ((t (:foreground "white"))))
- '(font-lock-variable-name-face ((t (:foreground "white"))))
  '(mode-line ((t (:background "green4" :foreground "yellow" :box (:line-width -1 :style released-button) :height 0.7))))
  '(region ((t (:background "#666" :foreground "snow"))))
  '(show-paren-match ((t (:foreground "green")))))
@@ -210,5 +134,40 @@
  '(kill-ring-max 60)
  '(show-paren-mode t)
  '(tool-bar-mode nil))
+
+(when (window-system)
+  (set-frame-font "Fira Code Bold 18"))
+(let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
+               (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
+               (36 . ".\\(?:>\\)")
+               (37 . ".\\(?:\\(?:%%\\)\\|%\\)")
+               (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
+               (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
+               (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
+               (45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
+               (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
+               (47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
+               (48 . ".\\(?:x[a-zA-Z]\\)")
+               (58 . ".\\(?:::\\|[:=]\\)")
+               (59 . ".\\(?:;;\\|;\\)")
+               (60 . ".\\(?:\\(?:!--\\)\\|\\(?:~~\\|->\\|\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[*$+~/<=>|-]\\)")
+               (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
+               (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
+               (63 . ".\\(?:\\(\\?\\?\\)\\|[:=?]\\)")
+               (91 . ".\\(?:]\\)")
+               (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
+               (94 . ".\\(?:=\\)")
+               (119 . ".\\(?:ww\\)")
+               (123 . ".\\(?:-\\)")
+               (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
+               (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)")
+               )
+             ))
+  (dolist (char-regexp alist)
+    (set-char-table-range composition-function-table (car char-regexp)
+                          `([,(cdr char-regexp) 0 font-shape-gstring]))))
 (server-start)
 
+
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
