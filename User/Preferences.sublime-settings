@@ -1,0 +1,25 @@
+// Settings in here override those in "Default/Preferences.sublime-settings",
+// and are overridden in turn by syntax-specific settings.
+{
+	"font_face": "Fira Code Semibold",
+	"font_size": 12,
+	"file_tab_style": "square",
+	"animation_enabled": false,
+	"show_encoding": true,
+	"hardware_acceleration": "opengl",
+	"gutter": true,
+	"margin": 0,
+	"ignored_packages":
+	[
+	],
+	"fold_buttons": false,
+	"fade_fold_buttons": false,
+	"word_wrap": "true",
+	"color_scheme": "Mariana.sublime-color-scheme",
+	"auto_close_tags": false,
+	"caret_style": "blink",
+	"block_caret": true,
+	"vintage_use_clipboard": true,
+
+	"theme": "Adaptive.sublime-theme",
+}

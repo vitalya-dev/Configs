@@ -1,0 +1,15 @@
+// Documentation at https://www.sublimetext.com/docs/themes.html
+{
+	"variables":
+	{
+		"font_face": "Fira Code Bold",
+		"font_size_sm": 16,
+		"font_size": 16,
+		"font_size_lg": 18,
+		"font_size_title": 24,
+	},
+	"rules":
+	[
+		
+	]
+}
